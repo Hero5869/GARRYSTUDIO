@@ -1,12 +1,36 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useEffect, useState } from 'react';
+import Hero from '@/components/Hero';
+import Portfolio from '@/components/Portfolio';
+import Services from '@/components/Services';
+import Testimonials from '@/components/Testimonials';
+import Contact from '@/components/Contact';
+import LoadingAnimation from '@/components/LoadingAnimation';
+import BookNowButton from '@/components/BookNowButton';
 
 const Index = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <LoadingAnimation />;
+  }
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-[#10100f] text-white overflow-x-hidden">
+      <Hero />
+      <Portfolio />
+      <Services />
+      <Testimonials />
+      <Contact />
+      <BookNowButton />
     </div>
   );
 };

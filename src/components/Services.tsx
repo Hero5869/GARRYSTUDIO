@@ -1,6 +1,5 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Camera, Drone, Image, Images, Printing, MagicMirror } from 'lucide-react';
+import { Camera, Plane, Image, Images, Printer, Mirror } from 'lucide-react';
 
 const Services = () => {
   const services = [
@@ -17,19 +16,19 @@ const Services = () => {
       price: 'Starting at $300'
     },
     {
-      icon: Drone,
+      icon: Plane,
       title: 'Cinematic Drone Shots',
       description: 'Breathtaking aerial photography and videography for unique perspectives.',
       price: 'Starting at $500'
     },
     {
-      icon: Printing,
+      icon: Printer,
       title: 'T-Shirt & Camera Photo Printing',
       description: 'Custom printing services for apparel and camera equipment with your favorite photos.',
       price: 'Starting at $25'
     },
     {
-      icon: MagicMirror,
+      icon: Mirror,
       title: 'Magic Mirror Photobooth',
       description: 'Interactive photo booth experience perfect for events and parties.',
       price: 'Starting at $400/event'

@@ -7,6 +7,7 @@ import Testimonials from '@/components/Testimonials';
 import Contact from '@/components/Contact';
 import LoadingAnimation from '@/components/LoadingAnimation';
 import BookNowButton from '@/components/BookNowButton';
+import BackgroundMusic from '@/components/BackgroundMusic';
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +25,8 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#10100f] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#10100f] text-white overflow-x-hidden animate-fade-in">
+      <BackgroundMusic />
       <Hero />
       <Portfolio />
       <Services />

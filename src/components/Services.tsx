@@ -1,5 +1,6 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Camera, Plane, Image, Images, Printer, Mirror } from 'lucide-react';
+import { Camera, Plane, Image, Images, Printer, Monitor } from 'lucide-react';
 
 const Services = () => {
   const services = [
@@ -28,7 +29,7 @@ const Services = () => {
       price: 'Starting at $25'
     },
     {
-      icon: Mirror,
+      icon: Monitor,
       title: 'Magic Mirror Photobooth',
       description: 'Interactive photo booth experience perfect for events and parties.',
       price: 'Starting at $400/event'

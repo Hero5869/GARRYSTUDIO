@@ -143,7 +143,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="text-white font-semibold">Address</p>
-                      <p className="text-gray-300">123 Photography Lane, Creative City, CC 12345</p>
+                      <p className="text-gray-300">VPO JANDWALA MIRA SANGLA, FAZILKA, PUNJAB 152128</p>
                     </div>
                   </div>
                   

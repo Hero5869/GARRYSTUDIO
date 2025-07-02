@@ -1,27 +1,21 @@
 import { Button } from '@/components/ui/button';
 import { Camera } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 
 const BookNowButton = () => {
-  const { toast } = useToast();
+  const whatsappLink = 'https://wa.me/919876543210?text=Hi!%20I%20want%20to%20book%20a%20photo%20session!';
 
-  const handleBookNow = () => {
-    toast({
-      title: "Let's Get Started!",
-      description: "Scroll up to the contact form to book your session.",
-    });
-
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  const handleClick = () => {
+    window.open(whatsappLink, '_blank'); // opens in new tab
   };
 
   return (
     <Button
-      onClick={handleBookNow}
-      className="fixed bottom-6 right-6 bg-[#fff503] text-[#10100f] hover:bg-[#fff503]/90 rounded-full p-4 shadow-2xl hover:scale-110 transition-all duration-300 z-50"
+      onClick={handleClick}
+      className="fixed bottom-6 right-6 bg-[#25D366] text-white hover:bg-[#128C7E] rounded-full px-6 py-4 shadow-2xl transition-all duration-300 z-50"
       size="lg"
     >
       <Camera className="w-5 h-5 mr-2" />
-      Book Now
+      WhatsApp Us
     </Button>
   );
 };

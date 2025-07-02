@@ -42,7 +42,7 @@ const Hero = () => {
         </div>
         
         <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          GARRY <span className="text-[#fff503]">STUDIOO</span><br />
+          GARRY <span className="text-[#fff503]">STUDIO</span><br />
         </h1>
         
         <p className="text-xl md:text-2xl mb-8 text-gray-300 animate-fade-in" style={{ animationDelay: '0.4s' }}>

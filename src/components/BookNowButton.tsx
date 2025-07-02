@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Camera } from 'lucide-react';
 
 const BookNowButton = () => {
-  const whatsappLink = 'https://wa.me/919876543210?text=Hi!%20I%20want%20to%20book%20a%20photo%20session!';
+  const whatsappLink = 'https://wa.me/7888302175?text=Hi!%20I%20want%20to%20book%20a%20photo%20session!';
 
   const handleClick = () => {
     window.open(whatsappLink, '_blank'); // opens in new tab

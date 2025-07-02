@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { Camera } from 'lucide-react';
 
@@ -8,85 +9,150 @@ const ModernPreloader = ({ onComplete }: { onComplete: () => void }) => {
 
   useEffect(() => {
     let progressInterval: NodeJS.Timeout;
+    let timeoutId: NodeJS.Timeout;
+    let animationFrameId: number;
+    
+    // Track actual loading progress
+    let actualProgress = 0;
+    let targetProgress = 0;
     let resourcesLoaded = 0;
-    let totalResources = 0;
+    let totalResources = 1; // Start with 1 to avoid division by zero
 
-    // Calculate total resources to load
-    const calculateTotalResources = () => {
-      const images = document.querySelectorAll('img');
-      const scripts = document.querySelectorAll('script[src]');
-      const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
-      const fonts = document.fonts ? document.fonts.size : 0;
+    // Smooth progress animation
+    const animateProgress = () => {
+      actualProgress += (targetProgress - actualProgress) * 0.08;
+      const roundedProgress = Math.floor(actualProgress);
       
-      return images.length + scripts.length + stylesheets.length + fonts + 1; // +1 for DOM ready
+      setLoadProgress(roundedProgress);
+      
+      if (Math.abs(targetProgress - actualProgress) > 0.5) {
+        animationFrameId = requestAnimationFrame(animateProgress);
+      }
+    };
+
+    // Update target progress
+    const updateProgress = () => {
+      const newProgress = Math.min((resourcesLoaded / totalResources) * 90, 90); // Cap at 90% until everything is done
+      targetProgress = newProgress;
+      animateProgress();
     };
 
     // Track resource loading
     const trackResourceLoad = () => {
       resourcesLoaded++;
-      const progress = Math.min((resourcesLoaded / totalResources) * 100, 100);
-      setLoadProgress(Math.floor(progress));
+      console.log(`Resource loaded: ${resourcesLoaded}/${totalResources}`);
+      updateProgress();
     };
 
-    // Initialize tracking
+    // Calculate and track all resources
     const initializeTracking = () => {
-      totalResources = calculateTotalResources();
-      
-      // Track images
+      // Reset counters
+      resourcesLoaded = 0;
+      totalResources = 0;
+
+      // Count and track images
       const images = document.querySelectorAll('img');
+      totalResources += images.length;
+      
       images.forEach(img => {
         const imageElement = img as HTMLImageElement;
-        if (imageElement.complete) {
-          trackResourceLoad();
+        if (imageElement.complete && imageElement.naturalWidth > 0) {
+          resourcesLoaded++;
         } else {
-          imageElement.addEventListener('load', trackResourceLoad);
-          imageElement.addEventListener('error', trackResourceLoad);
+          const onLoad = () => {
+            trackResourceLoad();
+            imageElement.removeEventListener('load', onLoad);
+            imageElement.removeEventListener('error', onLoad);
+          };
+          imageElement.addEventListener('load', onLoad);
+          imageElement.addEventListener('error', onLoad);
         }
       });
 
-      // Track stylesheets
+      // Count and track stylesheets
       const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
+      totalResources += stylesheets.length;
+      
       stylesheets.forEach(link => {
         const linkElement = link as HTMLLinkElement;
-        if (linkElement.sheet) {
-          trackResourceLoad();
-        } else {
-          linkElement.addEventListener('load', trackResourceLoad);
-          linkElement.addEventListener('error', trackResourceLoad);
+        try {
+          if (linkElement.sheet && linkElement.sheet.cssRules) {
+            resourcesLoaded++;
+          } else {
+            const onLoad = () => {
+              trackResourceLoad();
+              linkElement.removeEventListener('load', onLoad);
+              linkElement.removeEventListener('error', onLoad);
+            };
+            linkElement.addEventListener('load', onLoad);
+            linkElement.addEventListener('error', onLoad);
+          }
+        } catch (e) {
+          // If we can't access cssRules, assume it's loaded
+          resourcesLoaded++;
         }
       });
 
       // Track fonts
       if (document.fonts) {
+        totalResources += 1;
         document.fonts.ready.then(() => {
           trackResourceLoad();
         });
       }
 
+      // Track scripts
+      const scripts = document.querySelectorAll('script[src]');
+      totalResources += scripts.length;
+      scripts.forEach(() => {
+        resourcesLoaded++; // Assume scripts are loaded if we're here
+      });
+
       // DOM ready
+      totalResources += 1;
       if (document.readyState === 'complete') {
-        trackResourceLoad();
+        resourcesLoaded++;
       } else {
-        window.addEventListener('load', trackResourceLoad);
+        const onLoad = () => {
+          trackResourceLoad();
+          window.removeEventListener('load', onLoad);
+        };
+        window.addEventListener('load', onLoad);
       }
 
-      // Fallback progress simulation for smoother UX
-      progressInterval = setInterval(() => {
-        setLoadProgress(prev => {
-          const targetProgress = Math.min((resourcesLoaded / totalResources) * 100, 100);
-          const newProgress = prev + (targetProgress - prev) * 0.1;
-          return Math.floor(newProgress);
-        });
-      }, 50);
+      console.log(`Total resources to track: ${totalResources}`);
+      
+      // Initial progress update
+      updateProgress();
+
+      // Fallback: ensure we reach 100% after a reasonable time
+      timeoutId = setTimeout(() => {
+        targetProgress = 100;
+        animateProgress();
+      }, 3000);
     };
 
-    // Start tracking after a short delay to ensure DOM is ready
-    const startTimer = setTimeout(initializeTracking, 100);
+    // Start tracking after DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeTracking);
+    } else {
+      setTimeout(initializeTracking, 100);
+    }
+
+    // Smooth progress updates
+    progressInterval = setInterval(() => {
+      // Gradually increase progress even if resources aren't loading
+      if (targetProgress < 90 && Date.now() % 500 === 0) {
+        targetProgress = Math.min(targetProgress + 2, 90);
+        animateProgress();
+      }
+    }, 100);
 
     return () => {
-      clearTimeout(startTimer);
+      clearTimeout(timeoutId);
       clearInterval(progressInterval);
-      window.removeEventListener('load', trackResourceLoad);
+      cancelAnimationFrame(animationFrameId);
+      document.removeEventListener('DOMContentLoaded', initializeTracking);
     };
   }, []);
 
@@ -106,6 +172,17 @@ const ModernPreloader = ({ onComplete }: { onComplete: () => void }) => {
       }, 600);
     }
   }, [loadProgress, isComplete, onComplete]);
+
+  // Ensure we reach 100% after a maximum time
+  useEffect(() => {
+    const maxLoadTime = setTimeout(() => {
+      if (!isComplete) {
+        setLoadProgress(100);
+      }
+    }, 5000);
+
+    return () => clearTimeout(maxLoadTime);
+  }, [isComplete]);
 
   return (
     <div className={`fixed inset-0 z-50 flex flex-col items-center justify-center transition-all duration-1000 ${

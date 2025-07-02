@@ -1,27 +1,23 @@
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Hero from '@/components/Hero';
 import Portfolio from '@/components/Portfolio';
 import Services from '@/components/Services';
 import Testimonials from '@/components/Testimonials';
 import Contact from '@/components/Contact';
-import LoadingAnimation from '@/components/LoadingAnimation';
+import ModernPreloader from '@/components/ModernPreloader';
 import BookNowButton from '@/components/BookNowButton';
 import BackgroundMusic from '@/components/BackgroundMusic';
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
+  const handlePreloaderComplete = () => {
+    setIsLoading(false);
+  };
 
   if (isLoading) {
-    return <LoadingAnimation />;
+    return <ModernPreloader onComplete={handlePreloaderComplete} />;
   }
 
   return (

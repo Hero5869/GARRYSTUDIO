@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { Camera } from 'lucide-react';
 
@@ -36,22 +35,24 @@ const ModernPreloader = ({ onComplete }: { onComplete: () => void }) => {
       // Track images
       const images = document.querySelectorAll('img');
       images.forEach(img => {
-        if (img.complete) {
+        const imageElement = img as HTMLImageElement;
+        if (imageElement.complete) {
           trackResourceLoad();
         } else {
-          img.addEventListener('load', trackResourceLoad);
-          img.addEventListener('error', trackResourceLoad);
+          imageElement.addEventListener('load', trackResourceLoad);
+          imageElement.addEventListener('error', trackResourceLoad);
         }
       });
 
       // Track stylesheets
       const stylesheets = document.querySelectorAll('link[rel="stylesheet"]');
       stylesheets.forEach(link => {
-        if (link.sheet) {
+        const linkElement = link as HTMLLinkElement;
+        if (linkElement.sheet) {
           trackResourceLoad();
         } else {
-          link.addEventListener('load', trackResourceLoad);
-          link.addEventListener('error', trackResourceLoad);
+          linkElement.addEventListener('load', trackResourceLoad);
+          linkElement.addEventListener('error', trackResourceLoad);
         }
       });
 

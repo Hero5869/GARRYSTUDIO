@@ -8,7 +8,6 @@ const Services = () => {
       icon: Camera,
       title: 'Wedding Photography',
       description: 'Capture your special day with stunning, timeless photographs that tell your love story.',
-      price: 'Starting at $1,500'
     },
     {
       icon: Camera,

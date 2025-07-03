@@ -82,9 +82,6 @@ const Services = () => {
                 <CardDescription className="text-gray-300 mb-4 leading-relaxed">
                   {service.description}
                 </CardDescription>
-                <p className="text-[#fff503] font-semibold text-lg">
-                  {service.price}
-                </p>
               </CardContent>
             </Card>
           ))}

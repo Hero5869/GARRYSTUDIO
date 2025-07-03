@@ -4,37 +4,32 @@ import { Camera, Plane, Image, Images, Printer, Monitor } from 'lucide-react';
 
 const Services = () => {
   const services = [
-    {
-      icon: Camera,
-      title: 'Wedding Photography',
-      description: 'Capture your special day with stunning, timeless photographs that tell your love story.',
-      price: 'Starting at $1,500'
-    },
-    {
-      icon: Camera,
-      title: 'Traditional Photography',
-      description: 'Professional portrait sessions for families, individuals, and special occasions.',
-      price: 'Starting at $300'
-    },
-    {
-      icon: Plane,
-      title: 'Cinematic Drone Shots',
-      description: 'Breathtaking aerial photography and videography for unique perspectives.',
-      price: 'Starting at $500'
-    },
-    {
-      icon: Printer,
-      title: 'T-Shirt & Camera Photo Printing',
-      description: 'Custom printing services for apparel and camera equipment with your favorite photos.',
-      price: 'Starting at $25'
-    },
-    {
-      icon: Monitor,
-      title: 'Magic Mirror Photobooth',
-      description: 'Interactive photo booth experience perfect for events and parties.',
-      price: 'Starting at $400/event'
-    }
-  ];
+  {
+    icon: Camera,
+    title: 'Wedding Photography',
+    description: 'Capture your special day with stunning, timeless photographs that tell your love story.'
+  },
+  {
+    icon: Camera,
+    title: 'Traditional Photography',
+    description: 'Professional portrait sessions for families, individuals, and special occasions.'
+  },
+  {
+    icon: Plane,
+    title: 'Cinematic Drone Shots',
+    description: 'Breathtaking aerial photography and videography for unique perspectives.'
+  },
+  {
+    icon: Printer,
+    title: 'T-Shirt & Camera Photo Printing',
+    description: 'Custom printing services for apparel and camera equipment with your favorite photos.'
+  },
+  {
+    icon: Monitor,
+    title: 'Birthday Photo Shoot',
+    description: 'Memorable photography experience specially designed for birthday celebrations.'
+  }
+];
 
   return (
     <section id="services" className="py-20 px-4 bg-[#10100f] relative">
@@ -83,9 +78,6 @@ const Services = () => {
                 <CardDescription className="text-gray-300 mb-4 leading-relaxed">
                   {service.description}
                 </CardDescription>
-                <p className="text-[#fff503] font-semibold text-lg">
-                  {service.price}
-                </p>
               </CardContent>
             </Card>
           ))}

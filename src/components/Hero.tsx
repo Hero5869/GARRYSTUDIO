@@ -13,7 +13,7 @@ const Hero = () => {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('https://i.postimg.cc/GtBbH1B5/GARRY.png')`
+          backgroundImage: `url('https://i.postimg.cc/ZRD0nHqV/GARRY.png')`
         }}
       >
         <div className="absolute inset-0 bg-[#10100f] bg-opacity-60"></div>
@@ -42,7 +42,8 @@ const Hero = () => {
         </div>
         
         <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          GARRY <span className="text-[#fff503]">STUDIO</span><br />
+          Capturing <span className="text-[#fff503]">Moments</span><br />
+          Creating <span className="text-[#fff503]">Magic</span>
         </h1>
         
         <p className="text-xl md:text-2xl mb-8 text-gray-300 animate-fade-in" style={{ animationDelay: '0.4s' }}>

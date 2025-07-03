@@ -26,8 +26,8 @@ const Services = () => {
   },
   {
     icon: Monitor,
-    title: 'Magic Mirror Photobooth',
-    description: 'Interactive photo booth experience perfect for events and parties.'
+    title: 'Birthday Photo Shoot',
+    description: 'Memorable photography experience specially designed for birthday celebrations.'
   }
 ];
 

@@ -143,7 +143,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="text-white font-semibold">Address</p>
-                      <p className="text-gray-300">123 Photography Lane, Creative City, CC 12345</p>
+                      <p className="text-gray-300">VPO JANDWALA MIRA SANGLA, FAZILKA, PUNJAB 152128</p>
                     </div>
                   </div>
                   
@@ -153,7 +153,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="text-white font-semibold">Phone</p>
-                      <p className="text-gray-300">+1 (555) 123-4567</p>
+                      <p className="text-gray-300">+91 98763 70988</p>
                     </div>
                   </div>
                   
@@ -163,7 +163,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="text-white font-semibold">Email</p>
-                      <p className="text-gray-300">hello@photographystudio.com</p>
+                      <p className="text-gray-300">WARWALGARRY4@GMAIL.COM</p>
                     </div>
                   </div>
                 </div>

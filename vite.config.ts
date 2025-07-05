@@ -29,21 +29,33 @@ export default defineConfig(({ mode }) => {
         "@": path.resolve(__dirname, "./src"),
       },
     },
-    // Add build optimizations to prevent common npm issues
+    // Enhanced build optimizations for compatibility
     build: {
+      target: 'es2015', // More compatible target
       rollupOptions: {
         onwarn(warning, warn) {
           // Suppress certain warnings that can cause npm issues
           if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
             return;
           }
+          if (warning.code === 'SOURCEMAP_ERROR') {
+            return;
+          }
           warn(warning);
         }
       }
     },
-    // Ensure compatibility with different node environments
+    // Enhanced compatibility settings
     define: {
       global: 'globalThis',
-    }
+    },
+    optimizeDeps: {
+      include: ['react', 'react-dom'],
+      esbuildOptions: {
+        target: 'es2015'
+      }
+    },
+    // Suppress engine warnings
+    logLevel: mode === 'development' ? 'info' : 'warn'
   };
 });

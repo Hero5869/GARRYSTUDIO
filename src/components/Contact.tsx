@@ -19,12 +19,45 @@ const Contact = () => {
   
   const { toast } = useToast();
 
+  const generateWhatsAppMessage = () => {
+    const template = `Hi! My name is ${formData.name || '[Name]'}.
+
+📧 Email: ${formData.email || '[Email]'}
+📱 Phone: ${formData.phone || '[Phone Number]'}
+📸 Service of Interest: ${formData.service || '[Service]'}
+
+💬 Message: ${formData.message || '[Message]'}
+
+I'm interested in your photography services. Looking forward to hearing from you!`;
+
+    return encodeURIComponent(template);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Check if required fields are filled
+    if (!formData.name || !formData.email || !formData.message) {
+      toast({
+        title: "Please fill required fields",
+        description: "Name, email, and message are required fields.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const whatsappMessage = generateWhatsAppMessage();
+    const whatsappLink = `https://wa.me/9876370988?text=${whatsappMessage}`;
+    
+    // Open WhatsApp with the pre-filled message
+    window.open(whatsappLink, '_blank');
+    
     toast({
-      title: "Message Sent!",
-      description: "Thank you for your inquiry. We'll get back to you soon!",
+      title: "Opening WhatsApp!",
+      description: "Your message has been prepared. Complete the sending in WhatsApp.",
     });
+    
+    // Reset form after successful submission
     setFormData({ name: '', email: '', phone: '', service: '', message: '' });
   };
 
@@ -57,7 +90,7 @@ const Contact = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="name" className="text-gray-300">Name</Label>
+                    <Label htmlFor="name" className="text-gray-300">Name *</Label>
                     <Input
                       id="name"
                       name="name"
@@ -68,7 +101,7 @@ const Contact = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="email" className="text-gray-300">Email</Label>
+                    <Label htmlFor="email" className="text-gray-300">Email *</Label>
                     <Input
                       id="email"
                       name="email"
@@ -107,7 +140,7 @@ const Contact = () => {
                 </div>
                 
                 <div>
-                  <Label htmlFor="message" className="text-gray-300">Message</Label>
+                  <Label htmlFor="message" className="text-gray-300">Message *</Label>
                   <Textarea
                     id="message"
                     name="message"
@@ -124,7 +157,7 @@ const Contact = () => {
                   type="submit"
                   className="w-full bg-[#fff503] text-[#10100f] hover:bg-[#fff503]/90 font-semibold py-3"
                 >
-                  Send Message
+                  Send via WhatsApp
                 </Button>
               </form>
             </CardContent>
